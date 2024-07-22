@@ -45,6 +45,7 @@ jobs:
           port: 22
           script: | 
             sudo apt update
+            sudo apt install -y python3-pip python3-venv
           
       - name: Run Streamlit App
         uses: appleboy/ssh-action@master
@@ -53,10 +54,12 @@ jobs:
           username: ${{secrets.REMOTE_USER}}
           key: ${{secrets.SSH_PRIVATE_KEY}}
           port: 22
-          script: | 
+          script: |
+           python3 -m venv venv
+           source venv/bin/activate 
            pip install --upgrade pip 
            pip install -r requirements.txt 
-           nohup streamlit run app.py --server.port 8501 
+           nohup streamlit run app.py --server.port 8501 & 
     
         
       
