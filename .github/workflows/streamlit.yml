@@ -35,6 +35,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           REMOTE_HOST: ${{secrets.REMOTE_HOST}}
           REMOTE_USER: ${{secrets.REMOTE_USER}}
+          TARGET: /home/ubuntu/web_app
         
       - name: Installing Packages
         uses: appleboy/ssh-action@master
@@ -55,6 +56,7 @@ jobs:
           key: ${{secrets.SSH_PRIVATE_KEY}}
           port: 22
           script: |
+           cd /home/ubuntu/web_app
            python3 -m venv venv
            source venv/bin/activate 
            pip install --upgrade pip 
